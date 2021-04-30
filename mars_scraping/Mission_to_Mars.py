@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[17]:
+# In[1]:
 
 
 # Import Splinter and BeautifulSoup
@@ -11,14 +11,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 
 
-# In[18]:
+# In[2]:
 
 
 executable_path = {'executable_path': ChromeDriverManager().install()}
 browser = Browser('chrome', **executable_path, headless=False)
 
 
-# In[19]:
+# In[3]:
 
 
 # Visit the mars nasa news site
@@ -28,7 +28,7 @@ browser.visit(url)
 browser.is_element_present_by_css('div.list_text', wait_time=1)
 
 
-# In[20]:
+# In[4]:
 
 
 html = browser.html
@@ -36,13 +36,13 @@ news_soup = soup(html, 'html.parser')
 slide_elem = news_soup.select_one('div.list_text')
 
 
-# In[21]:
+# In[5]:
 
 
 slide_elem.find('div', class_='content_title')
 
 
-# In[22]:
+# In[6]:
 
 
 # Use the parent element to find the first `a` tag and save it as `news_title`
@@ -50,7 +50,7 @@ news_title = slide_elem.find('div', class_='content_title').get_text()
 news_title
 
 
-# In[23]:
+# In[7]:
 
 
 # Use the parent element to find the paragraph text
@@ -60,7 +60,7 @@ news_p
 
 # ### Featured Images
 
-# In[24]:
+# In[8]:
 
 
 # Visit URL
@@ -68,7 +68,7 @@ url = 'https://spaceimages-mars.com'
 browser.visit(url)
 
 
-# In[25]:
+# In[9]:
 
 
 # Find and click the full image button
@@ -76,7 +76,7 @@ full_image_elem = browser.find_by_tag('button')[1]
 full_image_elem.click()
 
 
-# In[26]:
+# In[10]:
 
 
 # Parse the resulting html with soup
@@ -84,7 +84,7 @@ html = browser.html
 img_soup = soup(html, 'html.parser')
 
 
-# In[27]:
+# In[11]:
 
 
 # Find the relative image url
@@ -92,7 +92,7 @@ img_url_rel = img_soup.find('img', class_='fancybox-image').get('src')
 img_url_rel
 
 
-# In[28]:
+# In[12]:
 
 
 # Use the base URL to create an absolute URL
@@ -100,7 +100,7 @@ img_url = f'https://spaceimages-mars.com/{img_url_rel}'
 img_url
 
 
-# In[29]:
+# In[13]:
 
 
 df = pd.read_html('https://galaxyfacts-mars.com')[0]
@@ -109,20 +109,14 @@ df.set_index('description', inplace=True)
 df
 
 
-# In[30]:
+# In[14]:
 
 
 df.to_html()
 
 
-# In[31]:
+# In[15]:
 
 
 browser.quit()
-
-
-# In[ ]:
-
-
-
 
