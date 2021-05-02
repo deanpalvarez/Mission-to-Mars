@@ -29,7 +29,7 @@ def scrape_all():
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
         "last_modified": dt.datetime.now(),
-        "hemispheres": hemisphere_image_urls
+        "hemispheres": hemisphere_image_urls(browser)
     }
 
     # Stop webdriver and return data
@@ -121,7 +121,7 @@ def mars_facts():
 # In[6]:
 
 
-def hemisphere_image_urls(html_text):
+def hemisphere_image_urls(browser):
     url = 'https://marshemispheres.com/'
     browser.visit(url)
     # 2. Create a list to hold the images and titles.
